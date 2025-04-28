@@ -110,7 +110,7 @@ class NASClient:
         
         if error_code in (400, 408, 409, 410) and clear_password_callback:
             clear_password_callback()
-        elif error_code in (404, 406) and clear_otp_callback:
+        elif error_code in (403, 404, 406) and clear_otp_callback:
             clear_otp_callback()
         raise Exception(error_msg)
     

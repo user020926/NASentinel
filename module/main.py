@@ -139,8 +139,6 @@ class LoginWindow(QMainWindow):
             self.open_log_window()
         except Exception as e:
             QMessageBox.critical(self, "錯誤", f"登入失敗: {str(e)}")
-            self.clear_pwd()
-            self.clear_otp()
 
     def validate_inputs(self) -> bool:
         """
@@ -169,12 +167,14 @@ class LoginWindow(QMainWindow):
         清空密碼輸入欄位。
         """
         self.pwd_entry.clear()
+        self.pwd_entry.setFocus()
 
     def clear_otp(self):
         """
         清空雙重驗證碼輸入欄位。
         """
         self.otp_entry.clear()
+        self.pwd_entry.setFocus()
 
     def open_log_window(self):
         """
