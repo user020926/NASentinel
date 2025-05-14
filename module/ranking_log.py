@@ -15,7 +15,11 @@ class Ranking_Log:
         logs (List[Dict[str, str]]): 儲存排行榜記錄的列表。
         log_file (str): 日誌檔案的保存路徑。
     """
+<<<<<<< HEAD
     RANKING_COLUMNS = ["排名", "使用者", "次數", "檔案大小", "姓名", "電子郵件"]
+=======
+    RANKING_COLUMNS = ["排名", "使用者", "次數", "姓名", "電子郵件"]
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
 
     def __init__(self):
         """
@@ -23,11 +27,14 @@ class Ranking_Log:
         """
         self.logs: List[Dict[str, str]] = []
         self.log_file = self.get_log_path()
+<<<<<<< HEAD
         self.total_sizes = {
             "upload": 0,
             "download": 0,
             "delete": 0
         }
+=======
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
 
     def get_log_path(self) -> str:
         """
@@ -40,7 +47,11 @@ class Ranking_Log:
         desktop_path = Path.home() / "Desktop"
         return str(desktop_path / f"NAS_Ranking_Log_{date_str}.xlsx")
 
+<<<<<<< HEAD
     def add_log(self, ranking_type: str, rank: int, username: str, count: int, size: int, name: str, email: str):
+=======
+    def add_log(self, ranking_type: str, rank: int, username: str, count: int, name: str, email: str):
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
         """
         添加排行榜記錄至日誌列表。
 
@@ -49,7 +60,10 @@ class Ranking_Log:
             rank (int): 排名。
             username (str): 使用者名稱。
             count (int): 事件次數。
+<<<<<<< HEAD
             size (int): 檔案大小總和。
+=======
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
             name (str): 使用者姓名。
             email (str): 使用者電子郵件。
 
@@ -61,13 +75,19 @@ class Ranking_Log:
                 "排名": str(rank),
                 "使用者": username,
                 "次數": str(count),
+<<<<<<< HEAD
                 "檔案大小": str(size),
+=======
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
                 "姓名": name,
                 "電子郵件": email,
                 "類型": ranking_type
             }
             self.logs.append(entry)
+<<<<<<< HEAD
             self.total_sizes[ranking_type] += size
+=======
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
         except Exception as e:
             raise Exception(f"添加排行榜日誌失敗: {str(e)}")
         
@@ -99,6 +119,7 @@ class Ranking_Log:
             data_alignment = Alignment(horizontal='center', vertical='center')
             
             column_widths = {
+<<<<<<< HEAD
                 'A': 8,   # 排名
                 'B': 15,  # 使用者
                 'C': 10,  # 次數
@@ -111,6 +132,19 @@ class Ranking_Log:
                 ("upload", "上傳排行榜", "上傳次數排行榜 (總大小: {})".format(self.format_size(self.total_sizes["upload"]))),
                 ("download", "下載排行榜", "下載次數排行榜 (總大小: {})".format(self.format_size(self.total_sizes["download"]))),
                 ("delete", "刪除排行榜", "刪除次數排行榜 (總大小: {})".format(self.format_size(self.total_sizes["delete"])))
+=======
+                'A': 8,  # 排名
+                'B': 15,  # 使用者
+                'C': 10,  # 次數
+                'D': 15,  # 姓名
+                'E': 25  # 電子郵件
+            }
+
+            for ranking_type, sheet_name, title in [
+                ("upload", "上傳排行榜", "上傳次數排行榜"),
+                ("download", "下載排行榜", "下載次數排行榜"),
+                ("delete", "刪除排行榜", "刪除次數排行榜")
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
             ]:
                 type_df = df[df["類型"] == ranking_type][self.RANKING_COLUMNS]
                 
@@ -118,7 +152,11 @@ class Ranking_Log:
                     continue
 
                 worksheet = workbook.create_sheet(title=sheet_name)
+<<<<<<< HEAD
                 worksheet.merge_cells('A1:F1')
+=======
+                worksheet.merge_cells('A1:E1')
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
                 title_cell = worksheet['A1']
                 title_cell.value = title
                 title_cell.font = title_font
@@ -135,7 +173,11 @@ class Ranking_Log:
                 for row_idx, row_data in enumerate(type_df.itertuples(), 3):
                     for col_idx, value in enumerate(row_data[1:], 1):
                         cell = worksheet.cell(row=row_idx, column=col_idx)
+<<<<<<< HEAD
                         cell.value = self.format_size(value) if col_idx == 4 else value  # Format size column
+=======
+                        cell.value = value
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
                         cell.alignment = data_alignment
                         cell.border = border
 
@@ -146,6 +188,7 @@ class Ranking_Log:
             self.logs.clear()
             return True
         except Exception as e:
+<<<<<<< HEAD
             raise Exception(f"保存排行榜日誌失敗: {str(e)}")
 
     def format_size(self, size):
@@ -169,3 +212,6 @@ class Ranking_Log:
             return f"{size:.2f} GB"
         except:
             return str(size)
+=======
+            raise Exception(f"保存排行榜日誌失敗: {str(e)}")
+>>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
