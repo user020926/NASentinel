@@ -1,7 +1,7 @@
 from typing import Dict, Any, Callable
 import requests
 from requests import Session
-from tenacity import retry, stop_after_attempt, wait_fixed, retry_if_exception_type, before_sleep_log
+from tenacity import retry, stop_after_attempt, wait_fixed, retry_if_exception_type
 import json
 
 class NASClient:

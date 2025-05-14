@@ -263,10 +263,7 @@ class LogWindow(QMainWindow):
         self.filestation_current_page = 1
         self.system_filtered_logs = []
         self.filestation_filtered_logs = []
-<<<<<<< HEAD
         self.top_rankings = 10
-=======
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
         self.setup_ui()
         self.fetch_logs()
 
@@ -380,7 +377,6 @@ class LogWindow(QMainWindow):
         rankings_layout = QVBoxLayout(self.rankings_tab)
         rankings_controls_layout = QHBoxLayout()
         self.rankings_start_date_edit, self.rankings_end_date_edit = self.date_controls(rankings_controls_layout, "rankings")
-<<<<<<< HEAD
         
         ranks_label = QLabel("前:")
         ranks_label.setFixedWidth(30)
@@ -390,24 +386,15 @@ class LogWindow(QMainWindow):
         self.ranks_combo.addItems([str(i) for i in range(1, 21)])
         self.ranks_combo.setCurrentText("10")
         rankings_controls_layout.addWidget(self.ranks_combo)
-        rankings_controls_layout.addSpacing(20)
+        rankings_controls_layout.addSpacing(25)
+
         self.search_export_buttons(rankings_controls_layout)
-        rankings_layout.addLayout(rankings_controls_layout)
-            
-        rankings_layout.addWidget(QLabel("上傳次數排行榜"))
-        self.upload_table = QTableWidget()
-        self.upload_table.setColumnCount(6)
-        self.upload_table.setHorizontalHeaderLabels(["排名", "使用者", "上傳次數", "檔案大小","姓名", "電子郵件"])
-=======
-        self.search_export_buttons(rankings_controls_layout)
-        rankings_controls_layout.addSpacing(20)
         rankings_layout.addLayout(rankings_controls_layout)
         
         rankings_layout.addWidget(QLabel("上傳次數排行榜"))
         self.upload_table = QTableWidget()
-        self.upload_table.setColumnCount(5)
-        self.upload_table.setHorizontalHeaderLabels(["排名", "使用者", "上傳次數", "姓名", "電子郵件"])
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
+        self.upload_table.setColumnCount(6)
+        self.upload_table.setHorizontalHeaderLabels(["排名", "使用者", "上傳次數", "檔案大小","姓名", "電子郵件"])
         self.upload_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.upload_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.upload_table.verticalHeader().setVisible(False)
@@ -415,13 +402,8 @@ class LogWindow(QMainWindow):
 
         rankings_layout.addWidget(QLabel("下載次數排行榜"))
         self.download_table = QTableWidget()
-<<<<<<< HEAD
         self.download_table.setColumnCount(6)
         self.download_table.setHorizontalHeaderLabels(["排名", "使用者", "下載次數", "檔案大小", "姓名", "電子郵件"])
-=======
-        self.download_table.setColumnCount(5)
-        self.download_table.setHorizontalHeaderLabels(["排名", "使用者", "下載次數", "姓名", "電子郵件"])
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
         self.download_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.download_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.download_table.verticalHeader().setVisible(False)
@@ -429,13 +411,8 @@ class LogWindow(QMainWindow):
 
         rankings_layout.addWidget(QLabel("刪除次數排行榜"))
         self.delete_table = QTableWidget()
-<<<<<<< HEAD
         self.delete_table.setColumnCount(6)
         self.delete_table.setHorizontalHeaderLabels(["排名", "使用者", "刪除次數", "檔案大小", "姓名", "電子郵件"])
-=======
-        self.delete_table.setColumnCount(5)
-        self.delete_table.setHorizontalHeaderLabels(["排名", "使用者", "刪除次數", "姓名", "電子郵件"])
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
         self.delete_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.delete_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.delete_table.verticalHeader().setVisible(False)
@@ -841,10 +818,7 @@ class LogWindow(QMainWindow):
                 self.update_filestation_table() if self.filestation_filtered_logs else self.filestation_page_label.setText("第 0 頁 / 共 0 頁")
 
             if is_initial_load or current_tab == 2:
-<<<<<<< HEAD
-                self.top_rankings = int(self.ranks_combo.currentText())
-=======
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
+                self.top_n_ranks = int(self.ranks_combo.currentText())
                 filestation_log_data = self.nas_client.fetch_filestation_logs()
                 filestation_logs = filestation_log_data["data"]["items"]
                 filtered_logs = []
@@ -869,12 +843,8 @@ class LogWindow(QMainWindow):
 
     def populate_rankings(self, df):
         """
-<<<<<<< HEAD
         填充排行榜表格，顯示上傳、下載、刪除次數的前 N 名用戶。
         同時顯示每個用戶的檔案大小總和。
-=======
-        填充排行榜表格，顯示上傳、下載、刪除次數的前十名用戶。
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
 
         參數:
             df (pd.DataFrame): 包含檔案管理日誌數據的 DataFrame。
@@ -890,13 +860,12 @@ class LogWindow(QMainWindow):
             (self.download_table, "下載", "download"),
             (self.delete_table, "刪除", "delete")
         ]:
-<<<<<<< HEAD
             df_event = df[df["事件"].str.contains(event, na=False)].copy()
             df_event["檔案大小"] = df_event["檔案大小"].apply(self.parse_file_size)
             
             grouped = df_event.groupby("使用者").agg(次數=("事件", "size"),檔案大小=("檔案大小", "sum")).reset_index()
             
-            df_event = grouped.sort_values(by="次數", ascending=False, ignore_index=True).head(self.top_rankings)
+            df_event = grouped.sort_values(by="次數", ascending=False, ignore_index=True).head(self.top_n_ranks)
             df_event["姓名"] = df_event["使用者"].map(lambda x: user_info_dict.get(x, {}).get("description", ""))
             df_event["信箱"] = df_event["使用者"].map(lambda x: user_info_dict.get(x, {}).get("email", ""))
             
@@ -913,16 +882,6 @@ class LogWindow(QMainWindow):
                     row["姓名"], 
                     row["信箱"]
                 ]):
-=======
-            df_event = df[df["事件"].str.contains(event, na=False)].groupby("使用者").size().reset_index(name=f"{event}次數")
-            df_event = df_event.sort_values(by=f"{event}次數", ascending=False, ignore_index=True).head(10)
-            df_event["姓名"] = df_event["使用者"].map(lambda x: user_info_dict.get(x, {}).get("description", ""))
-            df_event["信箱"] = df_event["使用者"].map(lambda x: user_info_dict.get(x, {}).get("email", ""))
-
-            table.setRowCount(len(df_event))
-            for idx, row in df_event.iterrows():
-                for col_idx, value in enumerate([str(idx + 1), row["使用者"], str(row[f"{event}次數"]), row["姓名"], row["信箱"]]):
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
                     item = QTableWidgetItem(value)
                     item.setTextAlignment(Qt.AlignCenter)
                     table.setItem(idx, col_idx, item)
@@ -931,12 +890,8 @@ class LogWindow(QMainWindow):
                     ranking_type=ranking_type,
                     rank=idx + 1,
                     username=row["使用者"],
-<<<<<<< HEAD
                     count=row["次數"],
                     size=row["檔案大小"],
-=======
-                    count=row[f"{event}次數"],
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
                     name=row["姓名"],
                     email=row["信箱"]
                 )
@@ -945,10 +900,9 @@ class LogWindow(QMainWindow):
         
         self.ranking_log = ranking_log
 
-<<<<<<< HEAD
     def top_rankings_changed(self, ranks_text):
         """
-        處理排行榜顯示數量選擇變化，更新 top_rankings 並刷新排行榜。
+        處理排行榜顯示數量選擇變化，更新 top_n_ranks 並刷新排行榜。
 
         參數:
             ranks_text (str): 選中的排行榜數量（1 到 20）。
@@ -981,7 +935,7 @@ class LogWindow(QMainWindow):
                 return int(size * 1024 * 1024)
             elif unit == "GB":
                 return int(size * 1024 * 1024 * 1024)
-            else:
+            else:  # assume bytes
                 return int(size)
         except:
             return 0
@@ -1004,8 +958,6 @@ class LogWindow(QMainWindow):
             size /= 1024.0
         return f"{size:.2f} GB"
 
-=======
->>>>>>> 9f205e81f0aee8bd5765e538d22b163fbfe532f6
     def export_logs(self):
         """
         匯出當前標籤頁的日誌數據至 Excel 檔案。
