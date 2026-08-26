@@ -100,7 +100,7 @@ NASentinel 是一套專為 Synology NAS 設計的日誌查詢與管理工具，�
 
 ## 聯絡與支援
 
-作者：余浩維  
+作者：Hao-Wei, Yu
 Email：haoweiyu0926@gmail.com
 
 如有問題或建議，歡迎來信指教！
